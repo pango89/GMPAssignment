@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GMPAssignment.Models
+﻿namespace GMPAssignment.Models
 {
     public class Product
     {

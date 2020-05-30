@@ -1,6 +1,5 @@
 ﻿using GMPAssignment.Interfaces;
 using GMPAssignment.Managers;
-using GMPAssignment.Models;
 using System;
 
 namespace GMPAssignment
@@ -19,25 +18,26 @@ namespace GMPAssignment
             int adminUserId = manager.CreateAdminUser();
             Console.WriteLine("Admin User Id is {0}", adminUserId);
 
-            while (true)
+            bool shouldContinue = true;
+            while (shouldContinue)
             {
                 if (UserId == -1)
-                    PreLogin(manager);
+                    shouldContinue = PreLogin(manager);
                 else
-                   PostLogin(manager, UserId, UserId == adminUserId);
+                    shouldContinue = PostLogin(manager, UserId, UserId == adminUserId);
             }
         }
 
-        private static void PreLogin(IAppManager manager)
+        private static bool PreLogin(IAppManager manager)
         {
             while (true)
             {
                 ShowMenuPreLogin();
-                Console.Write("Enter Your Choice(1-3): ");
+                Console.Write("Enter Your Choice(0-3): ");
                 int option = Convert.ToInt32(Console.ReadLine());
 
                 if (option == 0)
-                    break;
+                    return false;
 
                 int userId;
                 switch (option)
@@ -64,7 +64,6 @@ namespace GMPAssignment
                         {
                             Console.WriteLine("User with user id {0} successfully signed in.", userId);
                             UserId = userId;
-                            return;
                         }
                         else
                             Console.WriteLine("Invalid User Id");
@@ -73,22 +72,24 @@ namespace GMPAssignment
                         manager.ShowProducts();
                         break;
                     default:
-                        Console.WriteLine("Invalid Input! Enter 0 to Exit");
+                        Console.WriteLine("Invalid Input!");
                         break;
                 }
+
+                return true;
             }
         }
 
-        private static void PostLogin(IAppManager manager, int userId, bool isAdmin)
+        private static bool PostLogin(IAppManager manager, int userId, bool isAdmin)
         {
             while (true)
             {
                 ShowMenuPostLogin(userId);
-                Console.Write("Enter Your Choice(1-8): ");
+                Console.Write("Enter Your Choice(0-8): ");
                 int option = Convert.ToInt32(Console.ReadLine());
 
                 if (option == 0)
-                    break;
+                    return false;
 
                 switch (option)
                 {
@@ -98,7 +99,6 @@ namespace GMPAssignment
                         {
                             Console.WriteLine("User {0} Signed out successfully.", userId);
                             UserId = -1;
-                            return;
                         }
                         else
                             Console.WriteLine("Invalid User Id");
@@ -203,9 +203,11 @@ namespace GMPAssignment
                             Console.WriteLine("Failed To Delete Product!");
                         break;
                     default:
-                        Console.WriteLine("Invalid Input! Enter 0 to Exit");
+                        Console.WriteLine("Invalid Input!");
                         break;
                 }
+
+                return true;
             }
         }
 
@@ -213,6 +215,7 @@ namespace GMPAssignment
         {
             Console.WriteLine();
             Console.WriteLine("########## MENU ##########");
+            Console.WriteLine("0. Exit");
             Console.WriteLine("1. Sign Up New User");
             Console.WriteLine("2. Sign In User");
             Console.WriteLine("3. Display Products");
@@ -224,6 +227,7 @@ namespace GMPAssignment
             Console.WriteLine();
             Console.WriteLine("Logged In User ID = {0}", userId);
             Console.WriteLine("########## MENU ##########");
+            Console.WriteLine("0. Exit");
             Console.WriteLine("1. Sign Out");
             Console.WriteLine("2. Display Cart");
             Console.WriteLine("3. Display Products");
