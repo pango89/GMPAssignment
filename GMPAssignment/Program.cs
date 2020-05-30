@@ -7,6 +7,11 @@ namespace GMPAssignment
     class Program
     {
         public static int UserId = -1;
+
+        /// <summary>
+        /// Main Entry Code
+        /// </summary>
+        /// <param name="args"></param>
         public static void Main(string[] args)
         {
             ILoginManager loginManager = new LoginManager();
@@ -28,6 +33,11 @@ namespace GMPAssignment
             }
         }
 
+        /// <summary>
+        /// Menu to be shown before login
+        /// </summary>
+        /// <param name="manager"></param>
+        /// <returns></returns>
         private static bool PreLogin(IAppManager manager)
         {
             while (true)
@@ -80,6 +90,13 @@ namespace GMPAssignment
             }
         }
 
+        /// <summary>
+        /// Operations post login
+        /// </summary>
+        /// <param name="manager"></param>
+        /// <param name="userId"></param>
+        /// <param name="isAdmin"></param>
+        /// <returns></returns>
         private static bool PostLogin(IAppManager manager, int userId, bool isAdmin)
         {
             while (true)
@@ -211,6 +228,9 @@ namespace GMPAssignment
             }
         }
 
+        /// <summary>
+        /// Menu to be shown before login
+        /// </summary>
         private static void ShowMenuPreLogin()
         {
             Console.WriteLine();
@@ -222,6 +242,10 @@ namespace GMPAssignment
             Console.WriteLine();
         }
 
+        /// <summary>
+        /// Menu to be show post login
+        /// </summary>
+        /// <param name="userId"></param>
         private static void ShowMenuPostLogin(int userId)
         {
             Console.WriteLine();
